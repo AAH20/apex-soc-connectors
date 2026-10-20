@@ -37,10 +37,22 @@ pytest
 
 ## Coverage
 
-One test module (`tests/unit/test_chronicle.py`, 54 tests) covers the Chronicle
-connector. The other eight connectors currently have **no test coverage** — that is
-the state they arrived in, stated plainly rather than implied. Adding tests per
-connector is the obvious next step.
+239 test functions. Four connectors carry colocated suites inside the package
+(`src/apex_soc/<vendor>/tests/`) and were never collected in the host project because
+its pytest `testpaths` pointed only at the top-level `tests/` directory. They are
+collected here.
+
+| Connector | Tests |
+|---|---|
+| `wazuh` | 67 |
+| `graylog` | 56 |
+| `chronicle` | 54 |
+| `opensearch` | 44 |
+| `ossec` | 18 |
+| **No tests** | `qradar`, `splunk`, `metron`, `integration` |
+
+The four without tests are the state they arrived in, stated plainly rather than
+implied.
 
 ## License
 
