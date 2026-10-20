@@ -8,7 +8,7 @@ import json
 import logging
 import socket
 import struct
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from typing import Any
 
 try:
@@ -105,7 +105,7 @@ def parse_netflow_v5_packet(data: bytes) -> list[dict[str, Any]]:
 
         # Derived fields
         record["timestamp"] = datetime.fromtimestamp(
-            unix_secs + unix_nsecs / 1e9, tz=UTC
+            unix_secs + unix_nsecs / 1e9, tz=timezone.utc
         ).isoformat()
         record["flow_duration_ms"] = record["last"] - record["first"]
         record["bytes_per_packet"] = (
@@ -157,7 +157,7 @@ class NetFlowToMetronConnector:
         records = parse_netflow_v5_packet(data)
         for record in records:
             record["source_ip"] = source_ip
-            record["ingest_timestamp"] = datetime.now(UTC).isoformat()
+            record["ingest_timestamp"] = datetime.now(timezone.utc).isoformat()
             record["connector"] = "netflow_connector"
             record["connector_version"] = "1.0.0"
             record["metron_enrichment"] = {

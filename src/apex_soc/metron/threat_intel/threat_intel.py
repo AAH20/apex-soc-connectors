@@ -9,7 +9,7 @@ import ipaddress
 import json
 import logging
 import os
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timezone, timedelta
 from typing import Any
 from urllib.request import Request, urlopen
 
@@ -33,7 +33,7 @@ class IOCEntry:
         self.feed_name = feed_name
         self.confidence = confidence
         self.category = category
-        self.first_seen = first_seen or datetime.now(UTC).isoformat()
+        self.first_seen = first_seen or datetime.now(timezone.utc).isoformat()
         self.last_seen = self.first_seen
         self.hit_count = 0
 
@@ -77,7 +77,7 @@ class ThreatIntelFeed:
     def needs_update(self) -> bool:
         if self._last_update is None:
             return True
-        elapsed = datetime.now(UTC) - self._last_update
+        elapsed = datetime.now(timezone.utc) - self._last_update
         return elapsed > timedelta(hours=self.update_interval_hours)
 
     def fetch(self) -> bool:
@@ -99,7 +99,7 @@ class ThreatIntelFeed:
                 logger.warning("Unknown feed format: %s", self.format)
                 return False
 
-            self._last_update = datetime.now(UTC)
+            self._last_update = datetime.now(timezone.utc)
             self._save_cache()
             logger.info("Feed '%s' updated: %d IOCs", self.name, self.ioc_count)
             return True
@@ -156,7 +156,7 @@ class ThreatIntelFeed:
         entry = self._iocs.get(value)
         if entry:
             entry.hit_count += 1
-            entry.last_seen = datetime.now(UTC).isoformat()
+            entry.last_seen = datetime.now(timezone.utc).isoformat()
             return entry
 
         # For IP blocklists, check CIDR membership
@@ -168,7 +168,7 @@ class ThreatIntelFeed:
                         network = ipaddress.ip_network(ioc_val, strict=False)
                         if addr in network:
                             ioc_entry.hit_count += 1
-                            ioc_entry.last_seen = datetime.now(UTC).isoformat()
+                            ioc_entry.last_seen = datetime.now(timezone.utc).isoformat()
                             return ioc_entry
                     except ValueError:
                         continue

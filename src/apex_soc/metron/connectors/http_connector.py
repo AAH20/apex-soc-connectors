@@ -7,7 +7,7 @@ them to Metron's Kafka topic for web traffic analysis.
 import json
 import logging
 import re
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from typing import Any
 
 try:
@@ -91,7 +91,7 @@ def parse_apache_timestamp(ts: str) -> str | None:
             int(hour),
             int(minute),
             int(second),
-            tzinfo=UTC,
+            tzinfo=timezone.utc,
         )
         return dt.isoformat()
     except (ValueError, KeyError, IndexError):
@@ -146,7 +146,7 @@ def parse_iis_log_line(line: str) -> dict[str, Any] | None:
     gd = m.groupdict()
     try:
         dt = datetime.strptime(gd["timestamp"], "%Y-%m-%d %H:%M:%S")
-        dt = dt.replace(tzinfo=UTC)
+        dt = dt.replace(tzinfo=timezone.utc)
         timestamp = dt.isoformat()
     except ValueError:
         timestamp = gd["timestamp"]
@@ -213,7 +213,7 @@ class HTTPLogToMetronConnector:
             return None
 
         record["source_ip"] = source_ip
-        record["ingest_timestamp"] = datetime.now(UTC).isoformat()
+        record["ingest_timestamp"] = datetime.now(timezone.utc).isoformat()
         record["connector"] = "http_connector"
         record["connector_version"] = "1.0.0"
         record["metron_enrichment"] = {

@@ -8,7 +8,7 @@ import json
 import logging
 import re
 from contextlib import suppress
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from typing import Any
 
 try:
@@ -131,7 +131,7 @@ class CEFToMetronConnector:
             return None
 
         record["source_ip"] = source_ip
-        record["ingest_timestamp"] = datetime.now(UTC).isoformat()
+        record["ingest_timestamp"] = datetime.now(timezone.utc).isoformat()
         record["connector"] = "cef_connector"
         record["connector_version"] = "1.0.0"
         record["metron_enrichment"] = {

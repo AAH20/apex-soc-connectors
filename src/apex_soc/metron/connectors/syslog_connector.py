@@ -8,7 +8,7 @@ import json
 import logging
 import re
 import socket
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from typing import Any
 
 try:
@@ -160,7 +160,7 @@ class SyslogToMetronConnector:
             return None
 
         parsed["source_ip"] = source_ip
-        parsed["ingest_timestamp"] = datetime.now(UTC).isoformat()
+        parsed["ingest_timestamp"] = datetime.now(timezone.utc).isoformat()
         parsed["connector"] = "syslog_connector"
         parsed["connector_version"] = "1.0.0"
 
