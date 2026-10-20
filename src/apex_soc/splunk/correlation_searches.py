@@ -6,7 +6,7 @@ produces a notable event in the Splunk Enterprise Security (ES)
 notable event framework.
 
 Usage:
-    from dcc.soc.splunk import create_default_correlation_searches
+    from apex_soc.splunk import create_default_correlation_searches
 
     searches = create_default_correlation_searches()
     for search in searches:

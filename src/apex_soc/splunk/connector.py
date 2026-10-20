@@ -5,7 +5,7 @@ to Splunk via the HEC REST API. Supports batching, retry with backoff,
 and index routing.
 
 Usage:
-    from dcc.soc.splunk import create_splunk_connector
+    from apex_soc.splunk import create_splunk_connector
 
     connector = create_splunk_connector(
         hec_url="https://splunk.example.com:8088",

@@ -4,7 +4,7 @@ Provides XML dashboard definitions that can be deployed to Splunk
 via the REST API or imported through the Splunk Web UI.
 
 Usage:
-    from dcc.soc.splunk import create_soc_dashboard
+    from apex_soc.splunk import create_soc_dashboard
 
     dashboard = create_soc_dashboard()
     print(dashboard.to_xml())

@@ -7,7 +7,7 @@ vulnerability results, MITRE ATT&CK mappings, cluster status, and healthchecks.
 Pure-Python implementation with no external dependencies.
 
 Usage:
-    from dcc.soc.wazuh import create_wazuh_connector
+    from apex_soc.wazuh import create_wazuh_connector
 
     connector = create_wazuh_connector(
         url="https://wazuh.example.com:55000",

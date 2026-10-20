@@ -5,7 +5,7 @@ import json
 import unittest
 from unittest.mock import MagicMock, patch
 
-from dcc.soc.wazuh import (
+from apex_soc.wazuh import (
     WazuhAgent,
     WazuhAgentStatus,
     WazuhAlert,
@@ -261,14 +261,14 @@ class TestConnector(unittest.TestCase):
 
     def test_health_check_failure(self):
         connector = self._make_connector()
-        with patch("dcc.soc.wazuh.connector._http_request") as mock_req:
+        with patch("apex_soc.wazuh.connector._http_request") as mock_req:
             mock_req.side_effect = WazuhConnectionError("unreachable")
             assert connector.health_check() is False
             assert connector._consecutive_failures == 1
 
     def test_health_check_success(self):
         connector = self._make_connector()
-        with patch("dcc.soc.wazuh.connector._http_request") as mock_req:
+        with patch("apex_soc.wazuh.connector._http_request") as mock_req:
             mock_req.return_value = {"data": {"title": "Wazuh API"}}
             assert connector.health_check() is True
             assert connector._consecutive_failures == 0
@@ -748,17 +748,17 @@ class TestValidationHelpers(unittest.TestCase):
     """Test validation helper functions."""
 
     def test_validate_ip_valid_ipv4(self):
-        from dcc.soc.wazuh.connector import _validate_ip_address
+        from apex_soc.wazuh.connector import _validate_ip_address
         assert _validate_ip_address("192.168.1.1") == "192.168.1.1"
         assert _validate_ip_address("10.0.0.1") == "10.0.0.1"
 
     def test_validate_ip_valid_ipv6(self):
-        from dcc.soc.wazuh.connector import _validate_ip_address
+        from apex_soc.wazuh.connector import _validate_ip_address
         assert _validate_ip_address("::1") == "::1"
         assert _validate_ip_address("fe80::1") == "fe80::1"
 
     def test_validate_ip_invalid(self):
-        from dcc.soc.wazuh.connector import _validate_ip_address
+        from apex_soc.wazuh.connector import _validate_ip_address
         with self.assertRaises(WazuhValidationError):
             _validate_ip_address("")
         with self.assertRaises(WazuhValidationError):
@@ -767,21 +767,21 @@ class TestValidationHelpers(unittest.TestCase):
             _validate_ip_address("256.1.1.1")
 
     def test_validate_port_valid(self):
-        from dcc.soc.wazuh.connector import _validate_port
+        from apex_soc.wazuh.connector import _validate_port
         assert _validate_port(0) == 0
         assert _validate_port(80) == 80
         assert _validate_port(65535) == 65535
         assert _validate_port(None) is None
 
     def test_validate_port_invalid(self):
-        from dcc.soc.wazuh.connector import _validate_port
+        from apex_soc.wazuh.connector import _validate_port
         with self.assertRaises(WazuhValidationError):
             _validate_port(-1)
         with self.assertRaises(WazuhValidationError):
             _validate_port(65536)
 
     def test_safe_int(self):
-        from dcc.soc.wazuh.connector import _safe_int
+        from apex_soc.wazuh.connector import _safe_int
         assert _safe_int(42) == 42
         assert _safe_int("42") == 42
         assert _safe_int(None) is None
@@ -791,7 +791,7 @@ class TestValidationHelpers(unittest.TestCase):
         assert _safe_int(-1, min_val=0) is None
 
     def test_safe_float(self):
-        from dcc.soc.wazuh.connector import _safe_float
+        from apex_soc.wazuh.connector import _safe_float
         assert _safe_float(3.14) == 3.14
         assert _safe_float("3.14") == 3.14
         assert _safe_float(None) is None

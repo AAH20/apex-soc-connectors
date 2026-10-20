@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import pytest
 
-from dcc.soc.opensearch import (
+from apex_soc.opensearch import (
     OpenSearchAlertSeverity,
     OpenSearchAPIConfig,
     OpenSearchConnectorManager,

@@ -6,7 +6,7 @@ authentication anomalies, authorization failures, data exfiltration,
 and operational emergencies.
 
 Usage:
-    from dcc.soc.splunk import create_default_alert_rules
+    from apex_soc.splunk import create_default_alert_rules
 
     rules = create_default_alert_rules()
     for rule in rules:

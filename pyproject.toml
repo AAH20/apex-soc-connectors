@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apex-soc-connectors"
+version = "0.1.0"
+description = "Read-only connector clients for SIEM and SOC platforms (Wazuh, QRadar, Splunk, Chronicle, Graylog, OSSEC, Metron, OpenSearch)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "AGPL-3.0-only" }
+dependencies = []
+
+[project.optional-dependencies]
+# Kafka producers in the Metron connectors import lazily and degrade to None when
+# the package is absent, so this is opt-in rather than required.
+kafka = ["kafka-python>=2.0"]
+test = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100

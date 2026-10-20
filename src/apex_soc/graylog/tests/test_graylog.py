@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import pytest
 
-from dcc.soc.graylog import (
+from apex_soc.graylog import (
     GraylogAlertManager,
     GraylogAPIConfig,
     GraylogConnectorManager,

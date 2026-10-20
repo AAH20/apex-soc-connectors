@@ -7,16 +7,16 @@ from pathlib import Path
 
 import pytest
 
-from dcc.soc.ossec.active_response import (
+from apex_soc.ossec.active_response import (
     ActiveResponse,
     ActiveResponseEngine,
     ResponseActionType,
     ResponseStatus,
 )
-from dcc.soc.ossec.connectors import OSSECLogConnector, OSSECQueueConnector
-from dcc.soc.ossec.dashboards import OSSECDashboard
-from dcc.soc.ossec.engine import OSSECEngine
-from dcc.soc.ossec.models import (
+from apex_soc.ossec.connectors import OSSECLogConnector, OSSECQueueConnector
+from apex_soc.ossec.dashboards import OSSECDashboard
+from apex_soc.ossec.engine import OSSECEngine
+from apex_soc.ossec.models import (
     OSSECAlert,
     OSSECEvent,
     OSSECGroup,
@@ -25,7 +25,7 @@ from dcc.soc.ossec.models import (
     OSSECStatus,
     Severity,
 )
-from dcc.soc.ossec.rules import CORRELATION_RULES, CorrelationRule, RuleEngine
+from apex_soc.ossec.rules import CORRELATION_RULES, CorrelationRule, RuleEngine
 
 
 class TestModels:

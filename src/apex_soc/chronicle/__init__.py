@@ -8,7 +8,7 @@ Usage
 
 .. code-block:: python
 
-    from dcc.soc.chronicle import ChronicleIntegration
+    from apex_soc.chronicle import ChronicleIntegration
 
     integration = ChronicleIntegration()
     integration.load_builtin_rules()
